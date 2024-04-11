@@ -1,3 +1,5 @@
+package teamkyr.pokemon;
+
 /*
   1: Monster
   2: Water 1

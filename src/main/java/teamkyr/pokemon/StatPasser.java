@@ -1,5 +1,8 @@
+package teamkyr.pokemon;
+
 import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.Graph;
+import org.json.simple.JSONObject;
 
 import java.util.Arrays;
 
@@ -24,14 +27,18 @@ public class StatPasser {
     13: Dragon
      */
 
+    public StatPasser() {
+
+    }
 
 
-
-    public StatPasser(String start, String end, Pokemon[] dex) {
+    public JSONObject getStat(String start, String end, Pokemon[] dex) {
 
         /*for (Monster m : FRLGrdex) {
             System.out.println(m.getName());
         }*/
+
+        JSONObject returnObj = new JSONObject();
 
         hs = false;
         String printable = "Path is: ";
@@ -252,7 +259,8 @@ public class StatPasser {
             printable = printable.substring(0, printable.lastIndexOf("\n"))+" =\n"+end;
         }
         System.out.print(printable);
-
+        returnObj.put("output", printable);
+        return returnObj;
     }
 
     public boolean verify(String s, boolean start, Pokemon[] dex) {
@@ -275,6 +283,7 @@ public class StatPasser {
     }
 
     public static void main(String[] args) {
-        StatPasser statPasser = new StatPasser("meowscarada", "bombirdier", Pokedexes.SVDLCdex);
+        StatPasser statPasser = new StatPasser();
+        statPasser.getStat("meowscarada", "bombirdier", Pokedexes.SVDLCdex);
     }
 }
