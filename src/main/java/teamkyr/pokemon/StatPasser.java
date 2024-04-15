@@ -2,6 +2,7 @@ package teamkyr.pokemon;
 
 import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.Graph;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.Arrays;
@@ -39,6 +40,13 @@ public class StatPasser {
         }*/
 
         JSONObject returnObj = new JSONObject();
+        JSONArray path = new JSONArray();
+
+        JSONObject input = new JSONObject();
+        input.put("start", start);
+        input.put("end", end);
+
+        returnObj.put("input", input);
 
         hs = false;
         String printable = "Path is: ";
@@ -238,9 +246,30 @@ public class StatPasser {
             } else {
                 hs = true;
             }
+
             if (hs) {
+                path.add(new JSONArray());
                 int skip = 0;
                 for (Integer inte : solution) {
+                    if ((skip % 2) == 0) {
+                        path.add(new JSONArray());
+
+                        JSONObject male = new JSONObject();
+                        male.put("name", dex[inte - 14].getName());
+                        male.put("gender", "male");
+
+                        JSONObject female = new JSONObject();
+                        female.put("name", dex[inte - 14].getName());
+                        female.put("gender", (skip == 0) ? "-" : "female");
+
+                        JSONArray last = (JSONArray) path.get(path.size() - 1);
+                        last.add(male);
+
+                        if (path.size() > 1) {
+                            JSONArray last_1 = (JSONArray) path.get(path.size() - 2);
+                            last_1.add(female);
+                        }
+                    }
                     if (skip == 0){
                         printable += dex[inte - 14].getName() +"\n"+ dex[inte - 14].getName()+ "♂ + ";
                     }
@@ -249,6 +278,9 @@ public class StatPasser {
                     }
                     skip++;
                 }
+                JSONArray last = (JSONArray) path.get(path.size()-1);
+                JSONObject lastObj = (JSONObject) last.get(0);
+                lastObj.put("gender", "-");
             }
         }
         if (printable.equals("Path is: ")) {
@@ -259,7 +291,11 @@ public class StatPasser {
             printable = printable.substring(0, printable.lastIndexOf("\n"))+" =\n"+end;
         }
         System.out.print(printable);
-        returnObj.put("output", printable);
+
+        returnObj.put("path", path);
+
+        System.out.print(returnObj.toJSONString());
+
         return returnObj;
     }
 
