@@ -30,6 +30,7 @@ public class WebAPIHandler implements RequestStreamHandler {
         try {
             String start = "unknown";
             String end = "unknown";
+            String pokedex = Pokedexes.SVDLC_DEX;
 
             JSONObject event = (JSONObject) parser.parse(reader);
             JSONObject responseBody = new JSONObject();
@@ -49,12 +50,17 @@ public class WebAPIHandler implements RequestStreamHandler {
                 if (qps.get("end") != null) {
                     end = (String) qps.get("end");
                 }
+                if (qps.get("pokedex") != null) {
+                    pokedex = (String) qps.get("pokedex");
+                }
             }
+
+            //TODO: Parameter validation
 
             responseBody.put("result", new JSONObject());
             if ((!start.equals("unknown") && (!end.equals("unknown")))) {
                 StatPasser sp = new StatPasser();
-                JSONObject resultObj = sp.getStat(start, end, Pokedexes.getDex(Pokedexes.SVDLC_DEX));
+                JSONObject resultObj = sp.getStat(start, end, pokedex);
                 responseBody.put("result", resultObj);
             }
 

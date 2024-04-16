@@ -33,7 +33,7 @@ public class StatPasser {
     }
 
 
-    public JSONObject getStat(String start, String end, Pokemon[] dex) {
+    public JSONObject getStat(String start, String end, String pokedexName) {
 
         /*for (Monster m : FRLGrdex) {
             System.out.println(m.getName());
@@ -42,9 +42,16 @@ public class StatPasser {
         JSONObject returnObj = new JSONObject();
         JSONArray path = new JSONArray();
 
+        Pokemon[] dex = Pokedexes.getDex(pokedexName);
+        if (dex == null) {
+            return returnObj;
+        }
+
+        // Capture the input in a JSON Object to return with the result
         JSONObject input = new JSONObject();
         input.put("start", start);
         input.put("end", end);
+        input.put("pokedex", pokedexName);
 
         returnObj.put("input", input);
 
@@ -323,6 +330,6 @@ public class StatPasser {
         statPasser.getStat(
                 "meowscarada",
                 "bombirdier",
-                Pokedexes.getDex(Pokedexes.SVDLC_DEX));
+                Pokedexes.SVDLC_DEX);
     }
 }
