@@ -17,11 +17,11 @@ package teamkyr.pokemon;
    */
 public class Pokedexes {
     //SV dex base game
-    public static final String SV_DEX = "SVdex";
-    public static final String SVDLC_DEX = "SVDLCdex";
+    public static final String SV_DEX = "svdex";
+    public static final String SVDLC_DEX = "svdlcdex";
     public static Pokemon[] getDex(String dexName) {
 
-        switch (dexName) {
+        switch (dexName.toLowerCase()) {
             case SV_DEX:
                 return Pokedexes.SVdex;
             case SVDLC_DEX:
