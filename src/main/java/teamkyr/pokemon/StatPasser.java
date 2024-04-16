@@ -320,6 +320,9 @@ public class StatPasser {
 
     public static void main(String[] args) {
         StatPasser statPasser = new StatPasser();
-        statPasser.getStat("meowscarada", "bombirdier", Pokedexes.SVDLCdex);
+        statPasser.getStat(
+                "meowscarada",
+                "bombirdier",
+                Pokedexes.getDex(Pokedexes.SVDLC_DEX));
     }
 }

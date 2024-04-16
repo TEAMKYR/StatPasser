@@ -54,7 +54,7 @@ public class WebAPIHandler implements RequestStreamHandler {
             responseBody.put("result", new JSONObject());
             if ((!start.equals("unknown") && (!end.equals("unknown")))) {
                 StatPasser sp = new StatPasser();
-                JSONObject resultObj = sp.getStat(start, end, Pokedexes.SVDLCdex);
+                JSONObject resultObj = sp.getStat(start, end, Pokedexes.getDex(Pokedexes.SVDLC_DEX));
                 responseBody.put("result", resultObj);
             }
 
