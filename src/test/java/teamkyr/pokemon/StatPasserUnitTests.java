@@ -25,7 +25,7 @@ public class StatPasserUnitTests {
     }
 
     @Test
-    public void testSvdlcexPath() {
+    public void testSvdlcdexPath() {
         String expectedStr = "{\"input\":{\"start\":\"meowscarada\",\"pokedex\":\"svdlcdex\",\"end\":\"bombirdier\"},\"path\":[[{\"gender\":\"-\",\"name\":\"Meowscarada\"}],[{\"gender\":\"male\",\"name\":\"Meowscarada\"},{\"gender\":\"female\",\"name\":\"Dipplin\"}],[{\"gender\":\"male\",\"name\":\"Dipplin\"},{\"gender\":\"female\",\"name\":\"Noivern\"}],[{\"gender\":\"male\",\"name\":\"Noivern\"},{\"gender\":\"female\",\"name\":\"Bombirdier\"}],[{\"gender\":\"-\",\"name\":\"Bombirdier\"}]]}";
 
         JSONParser parser = new JSONParser();
