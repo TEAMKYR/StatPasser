@@ -1,3 +1,5 @@
+package teamkyr.pokemon;
+
 /*
   1: Monster
   2: Water 1
@@ -15,7 +17,20 @@
    */
 public class Pokedexes {
     //SV dex base game
-    public static final Pokemon[] SVdex = {
+    public static final String SV_DEX = "svdex";
+    public static final String SVDLC_DEX = "svdlcdex";
+    public static Pokemon[] getDex(String dexName) {
+
+        switch (dexName.toLowerCase()) {
+            case SV_DEX:
+                return Pokedexes.SVdex;
+            case SVDLC_DEX:
+                return Pokedexes.SVDLCdex;
+            default:
+                return null;
+        }
+    }
+    private static final Pokemon[] SVdex = {
             new Pokemon("Floragato","Field","Grass",87.5,20),
             new Pokemon("Meowscarada","Field","Grass",87.5,20),
             new Pokemon("Fuecoco","Field",87.5,20),
@@ -418,7 +433,7 @@ public class Pokedexes {
     };
 
     //svdex+dlc+hometransferrables
-    public static final Pokemon[] SVDLCdex = {
+    private static final Pokemon[] SVDLCdex = {
             //Paldean Dex
             new Pokemon("Floragato","Field","Grass",87.5,20),
             new Pokemon("Meowscarada","Field","Grass",87.5,20),

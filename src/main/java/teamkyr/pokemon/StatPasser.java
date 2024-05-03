@@ -1,5 +1,9 @@
+package teamkyr.pokemon;
+
 import edu.princeton.cs.algs4.BreadthFirstPaths;
 import edu.princeton.cs.algs4.Graph;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 
 import java.util.Arrays;
 
@@ -24,14 +28,32 @@ public class StatPasser {
     13: Dragon
      */
 
+    public StatPasser() {
+
+    }
 
 
-
-    public StatPasser(String start, String end, Pokemon[] dex) {
+    public JSONObject getStat(String start, String end, String pokedexName) {
 
         /*for (Monster m : FRLGrdex) {
             System.out.println(m.getName());
         }*/
+
+        JSONObject returnObj = new JSONObject();
+        JSONArray path = new JSONArray();
+
+        Pokemon[] dex = Pokedexes.getDex(pokedexName);
+        if (dex == null) {
+            return returnObj;
+        }
+
+        // Capture the input in a JSON Object to return with the result
+        JSONObject input = new JSONObject();
+        input.put("start", start);
+        input.put("end", end);
+        input.put("pokedex", pokedexName);
+
+        returnObj.put("input", input);
 
         hs = false;
         String printable = "Path is: ";
@@ -231,9 +253,30 @@ public class StatPasser {
             } else {
                 hs = true;
             }
+
             if (hs) {
+                path.add(new JSONArray());
                 int skip = 0;
                 for (Integer inte : solution) {
+                    if ((skip % 2) == 0) {
+                        path.add(new JSONArray());
+
+                        JSONObject male = new JSONObject();
+                        male.put("name", dex[inte - 14].getName());
+                        male.put("gender", "male");
+
+                        JSONObject female = new JSONObject();
+                        female.put("name", dex[inte - 14].getName());
+                        female.put("gender", (skip == 0) ? "-" : "female");
+
+                        JSONArray last = (JSONArray) path.get(path.size() - 1);
+                        last.add(male);
+
+                        if (path.size() > 1) {
+                            JSONArray last_1 = (JSONArray) path.get(path.size() - 2);
+                            last_1.add(female);
+                        }
+                    }
                     if (skip == 0){
                         printable += dex[inte - 14].getName() +"\n"+ dex[inte - 14].getName()+ "♂ + ";
                     }
@@ -242,6 +285,9 @@ public class StatPasser {
                     }
                     skip++;
                 }
+                JSONArray last = (JSONArray) path.get(path.size()-1);
+                JSONObject lastObj = (JSONObject) last.get(0);
+                lastObj.put("gender", "-");
             }
         }
         if (printable.equals("Path is: ")) {
@@ -253,6 +299,11 @@ public class StatPasser {
         }
         System.out.print(printable);
 
+        returnObj.put("path", path);
+
+        System.out.print(returnObj.toJSONString());
+
+        return returnObj;
     }
 
     public boolean verify(String s, boolean start, Pokemon[] dex) {
@@ -275,6 +326,10 @@ public class StatPasser {
     }
 
     public static void main(String[] args) {
-        StatPasser statPasser = new StatPasser("meowscarada", "bombirdier", Pokedexes.SVDLCdex);
+        StatPasser statPasser = new StatPasser();
+        statPasser.getStat(
+                "meowscarada",
+                "bombirdier",
+                Pokedexes.SVDLC_DEX);
     }
 }

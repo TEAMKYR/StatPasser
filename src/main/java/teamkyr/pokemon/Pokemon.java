@@ -1,3 +1,5 @@
+package teamkyr.pokemon;
+
 public class Pokemon implements Comparable {
 
     private String name;
